@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import ReactDom from "react-dom";
 import Profile from "./github/Profile.js";
+import Repo from "./github/Repo.js";
 
 class App extends Component {
 	constructor(props){
@@ -8,7 +9,7 @@ class App extends Component {
 		this.state={
 			userName: "deepak6sp",
 			userData: [],
-			userrRepos:[],
+			userRepos:[],
 			perPage:5
 		}
 	}
@@ -19,6 +20,20 @@ class App extends Component {
 			cache:false,
 			success : function(result){
 				this.setState({userData : result});
+			}.bind(this),
+			error : function(xhr,status,err){
+				alert(err);
+			}.bind(this)
+		});
+	}
+
+	getUserRepos(){
+		$.ajax({
+			url: "https://api.github.com/users/"+this.state.userName+"/repos",
+			dataType : "json",
+			cache:false,
+			success : function(result){
+				this.setState({userRepos : result});
 				console.log(JSON.stringify(result));
 			}.bind(this),
 			error : function(xhr,status,err){
@@ -28,14 +43,17 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-	 	this.getUserData();     
+	 	this.getUserData(); 
+	 	this.getUserRepos();    
 	}
 
 	render(){
-		var udata = this.state.userData;
 		return (
-			<div><Profile profile={this.state.userData} /></div>
-
+				<div>
+					<Profile profile={this.state.userData} />
+					<Repo repos={this.state.userRepos} />
+				</div>
+				
 
 		);
 	}

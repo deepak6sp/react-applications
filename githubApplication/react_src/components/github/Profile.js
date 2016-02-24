@@ -28,6 +28,11 @@ class Profile extends Component {
 				  					{this.props.profile.email}
 				  				</div>
 				  			</div>
+				  			<div className="row">
+					  			<div className="col-md-12">
+				  					<a href={this.props.profile.html_url} className="btn btn-primary">View Profile</a>
+				  				</div>
+				  			</div>
 				  		</div>
 				  	</div>
 				    
