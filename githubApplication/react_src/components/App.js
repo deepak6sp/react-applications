@@ -1,5 +1,7 @@
 import React,{Component} from "react";
 import ReactDom from "react-dom";
+import Navbar from "./Navbar.js";
+import Search from "./Search.js";
 import Profile from "./github/Profile.js";
 import Repo from "./github/Repo.js";
 
@@ -15,7 +17,7 @@ class App extends Component {
 	}
 	getUserData(){
 		$.ajax({
-			url: "https://api.github.com/users/"+this.state.userName,
+			url: "https://api.github.com/users/"+this.state.userName+"?client_id="+this.props.clientId+"&client_secret="+this.props.clientSecret,
 			dataType : "json",
 			cache:false,
 			success : function(result){
@@ -29,12 +31,11 @@ class App extends Component {
 
 	getUserRepos(){
 		$.ajax({
-			url: "https://api.github.com/users/"+this.state.userName+"/repos",
+			url: "https://api.github.com/users/"+this.state.userName+"/repos?client_id="+this.props.clientId+"&client_secret="+this.props.clientSecret,
 			dataType : "json",
 			cache:false,
 			success : function(result){
 				this.setState({userRepos : result});
-				console.log(JSON.stringify(result));
 			}.bind(this),
 			error : function(xhr,status,err){
 				alert(err);
@@ -47,9 +48,18 @@ class App extends Component {
 	 	this.getUserRepos();    
 	}
 
+	handleSubmit(username){
+		this.setState({userName : username},function(){
+			this.getUserData(); 
+	 		this.getUserRepos();
+		});
+	}
+
 	render(){
 		return (
 				<div>
+					<Navbar />
+					<Search onFormSubmit={this.handleSubmit.bind(this)}/>
 					<Profile profile={this.state.userData} />
 					<Repo repos={this.state.userRepos} />
 				</div>
