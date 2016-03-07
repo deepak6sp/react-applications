@@ -1,3 +1,3 @@
 module.exports = {
-	SEARCH : "SEARCH"
+	SEARCH_MOVIES : "SEARCH_MOVIES"
 }
