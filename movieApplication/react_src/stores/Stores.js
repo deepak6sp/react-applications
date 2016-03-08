@@ -26,8 +26,14 @@ let MyStore = assign({},EventEmitter.prototype,{
 
 MyDispatcher.register(function(payload){
 	let action = payload.action;
-
 	switch(action.actionType){
+		case MyConstants.SEARCH_MOVIES: MyApi.searchMovies(action.movie);
+										MyStore.emit(CHANGE_EVENT);
+										break;
+		case MyConstants.RECEIVE_MOVIES: console.log(action.rmovie);
+										//MyApi.receiveMovies(action.rmovie);
+										MyStore.emit(CHANGE_EVENT);
+										break;
 
 	}
 	return true;

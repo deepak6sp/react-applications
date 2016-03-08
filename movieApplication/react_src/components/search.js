@@ -6,7 +6,12 @@ import MyStore from '../stores/Stores';
 class Search extends React.Component {
 	handleSubmit(e){
 		e.preventDefault();
-		alert(document.getElementById("movieName").value);
+		var movieTitle = document.getElementById("movieName").value;
+		let movie = {
+			"title":movieTitle
+		}
+		
+		MyActions.searchMovies(movie);
 
 	}
     render() {
