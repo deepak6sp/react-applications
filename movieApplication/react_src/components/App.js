@@ -25,11 +25,15 @@ var  MovieApp = React.createClass ({
 		this.setState(getAppState());
 	},
     render() {
-        return <div>
-        			<h1>Welcome to my movie finder</h1>
-        			<Search />
+        return <div className="container">
+        			<h1 className="text-center">Welcome to my movie finder</h1>
+        			<div className="row">
+        				<div className="col-md-offset-4 col-md-4 text-center">
+        					<Search />
+        				</div>
+        			</div>
         			<ReceiveMovies Movies={this.state.movies}/>
-        	</div>;
+        		</div>;
     }
 });
 
