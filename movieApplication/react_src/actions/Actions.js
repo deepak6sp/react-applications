@@ -11,7 +11,6 @@ var MyActions = {
 		});
 	},
 	receiveMovies:function(rmovie){	
-
 		MyDispatcher.handleViewAction({
 			actionType:MyConstants.RECEIVE_MOVIES,
 			rmovie:rmovie

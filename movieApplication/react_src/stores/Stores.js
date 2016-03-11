@@ -7,7 +7,7 @@ import MyApi from '../utils/MyApi';
 
 let CHANGE_EVENT = 'change';
 
-let movies = new Array();
+let _movies = [];
 let selected = '';
 
 let MyStore = assign({},EventEmitter.prototype,{
@@ -20,18 +20,23 @@ let MyStore = assign({},EventEmitter.prototype,{
 	},
 	removeChangeListener: function(callback){
 		this.removeListener('change',callback);
+	},
+	receiveMovies: function(movies){
+		_movies = movies;	
+	},
+	getMovies:function(){
+		return _movies;
 	}
-
 });
 
 MyDispatcher.register(function(payload){
 	let action = payload.action;
 	switch(action.actionType){
-		case MyConstants.SEARCH_MOVIES: MyApi.searchMovies(action.movie);
+		case MyConstants.SEARCH_MOVIES: ;
+										MyApi.searchMovies(action.movie);
 										MyStore.emit(CHANGE_EVENT);
 										break;
-		case MyConstants.RECEIVE_MOVIES: console.log(action.rmovie);
-										//MyApi.receiveMovies(action.rmovie);
+		case MyConstants.RECEIVE_MOVIES:MyStore.receiveMovies(action.rmovie);
 										MyStore.emit(CHANGE_EVENT);
 										break;
 
